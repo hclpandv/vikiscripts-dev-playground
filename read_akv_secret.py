@@ -2,6 +2,7 @@
 """
 Description : Module to read AKV Secret
 Version     : 1.0
+Maintainer  : Vikas Pandey, <vikiscripts@gmail.com>
 Date        : 17-MAR-2023
 """
 from os import environ as env
