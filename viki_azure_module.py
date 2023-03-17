@@ -91,4 +91,4 @@ if __name__ == '__main__':
 
     #Testing    
     #print(my_instance.get_azure_rgs())
-    print(my_instance.get_azure_vms())
+    print(my_instance.get_azure_rgs())
