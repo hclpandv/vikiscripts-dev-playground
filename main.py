@@ -8,6 +8,7 @@ import os
 import json
 #import requests
 import re
+import vikiscripts_azure_kv_secret
 
 class ExampleClass:
     def __init__(self, name):
@@ -28,7 +29,8 @@ class ExampleClass:
 if __name__ == '__main__':
     # Example usage
     my_instance = ExampleClass('Alice')
+    print(vikiscripts_azure_kv_secret.DB_PASSWORD)
     print(my_instance.greet())
     print(my_instance.farewell())
     print(my_instance.name)  # Using the property
-    print()
+    
