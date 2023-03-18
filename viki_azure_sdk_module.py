@@ -44,3 +44,9 @@ if __name__ == '__main__':
     #Testing    
     #print(my_instance.get_azure_rgs())
     print(my_instance.get_azure_kv_secret("https://vikikeyvault01.vault.azure.net/","vikisecret"))
+
+    password = my_instance.get_azure_kv_secret(
+        vault_url = "https://vikikeyvault01.vault.azure.net/",
+        secret_name = "vikisecret"
+    )
+    print(password)
