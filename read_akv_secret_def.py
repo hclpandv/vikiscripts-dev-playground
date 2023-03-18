@@ -25,14 +25,3 @@ def get_azure_kv_secret(vault_url,secret_name):
 vault_url = "https://vikikeyvault01.vault.azure.net/"
 secret_name = "vikisecret"
 print(get_azure_kv_secret(vault_url=vault_url, secret_name=secret_name))
-
-password = azure.keyvault.secrets.SecretClient(
-        vault_url=vault_url,
-        credential=azure.identity.ClientSecretCredential(
-            tenant_id=os.environ.get("TENANT_ID", ""),
-            client_id=os.environ.get("CLIENT_ID", ""),
-            client_secret=os.environ.get("CLIENT_SECRET", "")
-        )
-).get_secret(secret_name).value
-
-print(password)
