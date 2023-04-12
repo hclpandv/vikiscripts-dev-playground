@@ -23,4 +23,4 @@ vm = compute_client.virtual_machines.get(
     vm_name = VM_NAME
 )
 
-print(vm)
+print(vm.hardware_profile.vm_size)
