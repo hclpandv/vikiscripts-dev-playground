@@ -1,15 +1,14 @@
 #!/usr/bin/env python
-
-# -------------------------------------------------------------------------------------------------
-# Version    : 1.0
-# Date       : 24-FEB-2023
-# Description: Custom Script and Plugin to populate/sync ansible inventory from Azure subscription   
-# Maintainer : Vikas Pandey, <vikiscripts@gmail.com>
-# features   :  - Creates 2 child groups for windows and linux
-#               - Excludes PowerOff VMs
-#               - Exclude Resource Groups and VM names based on supplied patters via Env Variables
-#               - Tested and suitable with ansible tower
-# -------------------------------------------------------------------------------------------------
+"""
+Version    : 1.0
+Date       : 24-FEB-2023
+Description: Custom Script and Plugin to populate/sync ansible inventory from Azure subscription   
+Maintainer : Vikas Pandey, <vikiscripts@gmail.com>
+features   :  - Creates 2 child groups for windows and linux
+              - Excludes PowerOff VMs
+              - Exclude Resource Groups and VM names based on supplied patters via Env Variables
+              - Tested and suitable with ansible tower
+"""
 import os
 import json
 import requests
