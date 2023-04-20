@@ -1,0 +1,25 @@
+---
+## Start ansible playbooks
+- name: Sample playbook
+  hosts: localhost
+  vars:
+    name: vikiscripts
+    url: vikiscripts.github.io
+  tasks:
+  - name: execute a python script
+    command: python
+    args:
+      stdin: |
+        name = "{{ name }}"
+        url = "{{ url }}"
+
+        print("Name " + name + " has url " + url)
+    register: viki_facts
+    #no_log: true
+    ignore_errors: true
+
+  - name: Display Facts
+    debug:
+      msg: |
+        VikiFacts : {{ viki_facts.stdout }}
+    ignore_errors: true
