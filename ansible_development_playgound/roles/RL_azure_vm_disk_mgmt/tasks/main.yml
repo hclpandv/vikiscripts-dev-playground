@@ -1,0 +1,5 @@
+---
+# tasks file for RL_azure_vm_disk_mgmt
+- name: Include task list in play only if the condition is true
+  include_tasks: "{{ disk_action }}/main.yml"
+  when: disk_action is defined

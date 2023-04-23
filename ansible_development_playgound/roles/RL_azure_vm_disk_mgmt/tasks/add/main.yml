@@ -1,0 +1,19 @@
+---
+- name: Logging information to add disk to azure VM 
+  debug:
+    msg: | 
+      Adding disk {{ disk_name }} to Azure VM 
+      Client {{ client_id }} is upadating VM: {{ vm_name }}/{{ vm_resource_group }} in Azure subscription {{ subscription_id }}
+    
+- name: Create Azure managed disk
+  azure_rm_manageddisk:
+    name: "{{ disk_name }}" 
+    resource_group: "{{ vm_resource_group }}"
+    location: "{{ vm_location }}"
+    disk_size_gb: "{{ disk_size_gb }}"
+    create_option: "{{ create_option }}"
+    managed_by: "{{ vm_name }}"
+    subscription_id: "{{ subscription_id }}"
+    tenant: "{{ tenant_id }}"
+    secret: "{{ secret }}"
+    client_id: "{{ client_id }}"

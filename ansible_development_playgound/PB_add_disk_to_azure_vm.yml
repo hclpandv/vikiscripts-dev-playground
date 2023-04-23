@@ -1,0 +1,6 @@
+---
+- hosts: localhost
+  roles:
+    - role: RL_azure_vm_disk_mgmt
+      vars:
+        disk_action: delete

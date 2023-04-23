@@ -1,0 +1,4 @@
+---
+- name: echo msg
+  debug:
+    msg: Modifyting disk to Azure VM
