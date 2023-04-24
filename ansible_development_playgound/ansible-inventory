@@ -1,0 +1,9 @@
+## inventory file  
+[production]
+GO01AZEULAP0012 ansible_host=20.239.178.26 ansible_user=azureuser
+
+[dev]
+localhost ansible_connection=local 
+
+[dev:vars]
+ansible_connection=local

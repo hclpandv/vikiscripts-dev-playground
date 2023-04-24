@@ -1,6 +1,11 @@
 ---
-- hosts: localhost
+- hosts: all
   roles:
-    - role: RL_azure_vm_disk_mgmt
-      vars:
-        disk_action: delete
+  - role: RL_azure_vm_disk_mgmt
+    vars:
+      disk_action: delete
+    delegate_to: localhost
+
+  tasks:
+  - name: facts 
+    setup:  
