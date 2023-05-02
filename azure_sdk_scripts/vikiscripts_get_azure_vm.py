@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-"""Get VM details from Azure"""
+"""Module to Get VM details from Azure"""
 import os
 import azure.identity
 import azure.mgmt.compute
 
 class AzureRM:
     """
-    Rest API interaction with AzureRM
+    Class to interact with AzureRM and get VM details
     """
     def __init__(self, subscription_id,client_id,client_secret,tenant_id):
         self.subscription_id = subscription_id
@@ -24,19 +24,29 @@ class AzureRM:
             credential=self.credential,
             subscription_id=self.subscription_id
         )
-    def get_azure_vm(self,name,resource_group_name):
+    def get_azure_vm(self,resource_group_name, name):
         """
-        Function to retrive all resourceGroups in a subscription
+        Function to get VM details
         """
         vm = self.compute_client.virtual_machines.get(
             resource_group_name = resource_group_name,
             vm_name = name
         )
         return vm
-
-    def start_azure_vm(self,name,resource_group_name):
+    
+    def get_azure_vm_powerstate(self,resource_group_name, name):
         """
-        Function to retrive all resourceGroups in a subscription
+        Function to get VM state
+        """
+        vm_instance_view = self.compute_client.virtual_machines.instance_view(
+            resource_group_name = resource_group_name, 
+            vm_name = name
+        )
+        return vm_instance_view.statuses[1].code
+
+    def start_azure_vm(self,resource_group_name,name):
+        """
+        Function to start a VM
         """
         async_vm_start = self.compute_client.virtual_machines.begin_start(
             resource_group_name,
@@ -51,16 +61,20 @@ class AzureRM:
 if __name__ == '__main__':
     # Example usage
     my_instance = AzureRM(
-        client_id = os.environ.get('CLIENT_ID', None),
-        client_secret = os.environ.get('CLIENT_SECRET', None),
+        client_id = os.environ.get('CLIENT_ID_CONTRIB', None),
+        client_secret = os.environ.get('CLIENT_SECRET_CONTRIB', None),
         tenant_id = os.environ.get('TENANT_ID', None),
         subscription_id = os.environ.get('SUBSCRIPTION_ID', None)
     )
     RESOURCE_GROUP_NAME = 'Koch_lab'
     VM_NAME = 'PersonalServer'  
     
-    vm_size = my_instance.get_azure_vm(VM_NAME,RESOURCE_GROUP_NAME).hardware_profile.vm_size
-    
-    
-    print(vm_size)
+    vm_size = my_instance.get_azure_vm(RESOURCE_GROUP_NAME,VM_NAME).hardware_profile.vm_size
+    vm_state = my_instance.get_azure_vm_powerstate(RESOURCE_GROUP_NAME,VM_NAME)
+
+    print("vm_size: " + vm_size)
+    print("vm_state: " + vm_state)
+    if 'deallocated' in vm_state:
+        print("Trying to start VM")
+        my_instance.start_azure_vm(RESOURCE_GROUP_NAME,VM_NAME)
 

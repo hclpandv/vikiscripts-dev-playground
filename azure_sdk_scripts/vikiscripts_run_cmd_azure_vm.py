@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Get VM details from Azure"""
+"""Execute PowerShell command on azure windows VM"""
 import os
 import azure.identity
 import azure.mgmt.compute
@@ -22,7 +22,7 @@ compute_client = azure.mgmt.compute.ComputeManagementClient(
 run_command_parameters = {
     'command_id': 'RunPowerShellScript',
     'script': [
-        'Get-WmiObject win32_computersystem'
+        "'Get-Disk | Where partitionstyle -eq raw | Initialize-Disk -PartitionStyle GPT -PassThru | New-Partition -AssignDriveLetter -UseMaximumSize | Format-Volume -FileSystem NTFS -Confirm:$false'"
     ]
 }
 
@@ -37,5 +37,5 @@ run_command_result = async_run_command.result()
 
 # Print the output of the PowerShell command
 for run in run_command_result.value:
-    print("Output of the PowerShell command on VM {}: {}".format(VM_NAME, run.message))
+    print("Output of the PowerShell command on VM {}:\n {}".format(VM_NAME, run.message))
 
