@@ -22,7 +22,8 @@ compute_client = azure.mgmt.compute.ComputeManagementClient(
 run_command_parameters = {
     'command_id': 'RunPowerShellScript',
     'script': [
-        "'Get-Disk | Where partitionstyle -eq raw | Initialize-Disk -PartitionStyle GPT -PassThru | New-Partition -AssignDriveLetter -UseMaximumSize | Format-Volume -FileSystem NTFS -Confirm:$false'"
+        #"'Get-Disk | Where partitionstyle -eq raw | Initialize-Disk -PartitionStyle GPT -PassThru | New-Partition -AssignDriveLetter -UseMaximumSize | Format-Volume -FileSystem NTFS -Confirm:$false'"
+        'get-wmiobject win32_computersystem'
     ]
 }
 
