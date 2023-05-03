@@ -1,5 +1,5 @@
 ---
-vm_name: PersonalServerLinux
+vm_name: PersonalServer
 vm_os: windows
 vm_resource_group: Koch_lab
 vm_location: eastasia

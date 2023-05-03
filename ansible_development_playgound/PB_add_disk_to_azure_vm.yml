@@ -3,5 +3,5 @@
   roles:
   - role: RL_azure_vm_disk_mgmt
     vars:
-      disk_action: delete
+      disk_action: add
   
