@@ -1,6 +1,6 @@
 ---
 vm_name: PersonalServer
-vm_os: windows
+vm_os_family: windows
 vm_resource_group: Koch_lab
 vm_location: eastasia
 servicenow_request_number: RITM100234
@@ -13,4 +13,3 @@ subscription_id: "{{ lookup('ansible.builtin.env', 'SUBSCRIPTION_ID') }}"
 tenant_id: "{{ lookup('ansible.builtin.env', 'TENANT_ID') }}"
 client_id: "{{ lookup('ansible.builtin.env', 'CLIENT_ID_CONTRIB') }}"
 secret: "{{ lookup('ansible.builtin.env', 'CLIENT_SECRET_CONTRIB') }}"
-ps_cmd: "{ 'Get-Disk | Where partitionstyle -eq raw | Initialize-Disk -PartitionStyle GPT -Confirm:$false -PassThru | New-Partition -AssignDriveLetter -UseMaximumSize | Format-Volume -FileSystem NTFS -Confirm:$false' }"
