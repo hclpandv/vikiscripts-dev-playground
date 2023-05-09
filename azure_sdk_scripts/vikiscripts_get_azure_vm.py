@@ -56,6 +56,18 @@ class AzureRM:
         async_vm_start.wait()
         print("VM {} has been started.".format(name))
 
+    def stop_azure_vm(self,resource_group_name,name):
+        """
+        Function to stop a VM
+        """
+        async_vm_start = self.compute_client.virtual_machines.begin_deallocate(
+            resource_group_name,
+            name
+        )
+
+        async_vm_start.wait()
+        print("VM {} has been stopped and deallocated.".format(name))
+
 
 
 if __name__ == '__main__':
@@ -67,14 +79,21 @@ if __name__ == '__main__':
         subscription_id = os.environ.get('SUBSCRIPTION_ID', None)
     )
     RESOURCE_GROUP_NAME = 'Koch_lab'
-    VM_NAME = 'PersonalServer'  
+    VM_NAME = 'PersonalServer'
+    VM_ACTION = 'Stop'  
     
     vm_size = my_instance.get_azure_vm(RESOURCE_GROUP_NAME,VM_NAME).hardware_profile.vm_size
     vm_state = my_instance.get_azure_vm_powerstate(RESOURCE_GROUP_NAME,VM_NAME)
+    vm_os = my_instance.get_azure_vm(RESOURCE_GROUP_NAME,VM_NAME).storage_profile.os_disk.os_type
 
     print("vm_size: " + vm_size)
+    print("vm_os: " + vm_os)
     print("vm_state: " + vm_state)
-    if 'deallocated' in vm_state:
+    if ('deallocated' in vm_state.lower()) and (VM_ACTION.lower() == 'start'):
         print("Trying to start VM")
         my_instance.start_azure_vm(RESOURCE_GROUP_NAME,VM_NAME)
+    
+    if ('running' in vm_state.lower()) and (VM_ACTION.lower() == "stop"):
+        print("Trying to stop VM")
+        my_instance.stop_azure_vm(RESOURCE_GROUP_NAME,VM_NAME)
 
