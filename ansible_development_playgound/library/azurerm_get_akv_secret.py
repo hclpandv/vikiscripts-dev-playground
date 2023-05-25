@@ -47,6 +47,7 @@ def main():
         result['original_message'] = get_akv_secret(
             module.params['vault_url'],
             module.params['secret_name'],
+            user_msi=True
         )
     else:
         result['original_message'] = get_akv_secret(
