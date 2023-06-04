@@ -23,6 +23,7 @@ def getresources(query):
     for sub in subs_client.subscriptions.list():
         subs_raw.append(sub.as_dict())
     subs_list = []
+    
     for sub in subs_raw:
         subs_list.append(sub.get('subscription_id'))
 
