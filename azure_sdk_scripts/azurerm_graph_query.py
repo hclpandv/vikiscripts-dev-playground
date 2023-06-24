@@ -6,6 +6,7 @@ Maintainer  : Vikas Pandey, <vikiscripts@gmail.com>
 Date        : 04-June-2023
 """
 import os
+import json
 import azure.identity
 import azure.mgmt.resourcegraph as arg
 from azure.mgmt.resource import SubscriptionClient
