@@ -12,7 +12,7 @@ from automationassets import get_automation_variable, AutomationAssetNotFound
 SUBSCRIPTION_ID = "b4bd79bb-2081-4f1e-8cc4-5c600d3bafc2"
 VAULT_URL = "https://vikivault01.vault.azure.net/"
 RECIPIENTS = [
-    {"address": "vikas.pandey@hatteland.com", "displayName": "Vikas Pandey"},
+    {"address": "vikas.pandey@mixymix.com", "displayName": "Vikas Pandey"},
     {"address": "vikiscripts@gmail.com", "displayName": "Vikas Pandey"}
 ]
 SENDER_ADDRESS = "DoNotReply@6545a451-9d70-4f84-886e-937d4ae193c7.azurecomm.net"
