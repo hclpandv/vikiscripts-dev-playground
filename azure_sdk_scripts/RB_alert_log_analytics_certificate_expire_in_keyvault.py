@@ -6,29 +6,16 @@ from azure.identity import ManagedIdentityCredential
 from azure.keyvault.certificates import CertificateClient
 from azure.monitor.ingestion import LogsIngestionClient
 from azure.core.exceptions import AzureError, HttpResponseError
-# from automationassets import get_automation_variable, AutomationAssetNotFound
 
 # Configuration constants
 SUBSCRIPTION_ID = "b4bd79bb-2081-4f1e-8cc4-5c600d3bafc2"
 VAULT_URL = "https://vikivault01.vault.azure.net/"
-RECIPIENTS = [
-    {"address": "vikas.pandey@hatteland.com", "displayName": "Vikas Pandey"},
-    {"address": "vikiscripts@gmail.com", "displayName": "Vikas Pandey"}
-]
-SENDER_ADDRESS = "DoNotReply@6545a451-9d70-4f84-886e-937d4ae193c7.azurecomm.net"
 EXPIRY_THRESHOLD_DAYS = 50
 
 # read email secrets from automation accounts variables
 endpoint_uri = "https://dce01-dt11.westeurope-1.ingest.monitor.azure.com" # logs ingestion endpoint of the DCR
 dcr_immutableid = "dcr-3fbaf3b21cb54db99648616fa4ce402c" # immutableId property of the Data Collection Rule
 stream_name = "Custom-AScertificateExpiring_CL" #name of the stream in the DCR that represents the destination table
-
-
-# try:
-#     EMAIL_ENDPOINT = get_automation_variable("azure_email_endpoint")
-#     EMAIL_ACCESS_KEY = get_automation_variable("azure_email_access_key")
-# except AutomationAssetNotFound:
-#     print ("variable(s) not found. Please check in Automation account shared variables settings")
 
 def get_certificate_expiry_status(vault_url, credential):
     try:
