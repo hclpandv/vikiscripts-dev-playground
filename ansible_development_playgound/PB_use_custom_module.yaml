@@ -1,0 +1,13 @@
+---
+- name: Configure Azure VM
+  hosts: localhost
+  tasks:
+  - name: calling custom azurerm module from library dir 
+    azurerm_get_akv_secret:
+      vault_url: https://vikikeyvault01.vault.azure.net/
+      secret_name: vikisecret
+      tenant_id: "{{ lookup('ansible.builtin.env', 'TENANT_ID') }}"
+      client_id: "{{ lookup('ansible.builtin.env', 'CLIENT_ID') }}"
+      client_secret: "{{ lookup('ansible.builtin.env', 'CLIENT_SECRET') }}"
+      #use_msi: yes
+

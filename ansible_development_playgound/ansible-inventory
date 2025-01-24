@@ -1,0 +1,9 @@
+## inventory file  
+[production]
+Personalserver ansible_host=20.205.97.158 ansible_user=azureuser
+
+[dev]
+localhost ansible_connection=local 
+
+[dev:vars]
+ansible_connection=local

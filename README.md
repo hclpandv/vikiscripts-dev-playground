@@ -1,2 +1,3 @@
 # vikiscripts-dev-playground
-vikiscripts-dev-playground
+
+Playground to develop quick scripts, ansible playbooks and terraform templates.

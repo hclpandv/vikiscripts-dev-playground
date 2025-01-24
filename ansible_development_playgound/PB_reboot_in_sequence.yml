@@ -1,0 +1,20 @@
+---
+- name: One by One reboot VMs in sequence
+  hosts: Gxxxxxxxx01
+  serial: 1
+  become: yes
+  tasks:
+  - name: start onebyone reboot
+    reboot:
+      test_command: whoami;uname -n;uptime
+      reboot_timeout: 360
+  - name: check target server uptime
+    shell: |
+      uname -n
+      whoami
+      last reboot | head -6
+    register: reboot_info
+  - name: display server status
+    debug:
+      var: reboot_info.stdout_lines
+      verbosity: 0  

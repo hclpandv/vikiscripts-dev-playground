@@ -1,0 +1,15 @@
+---
+vm_name: PersonalServer
+vm_os_family: windows
+vm_resource_group: Koch_lab
+vm_location: eastasia
+servicenow_request_number: RITM100234
+disk_action: add
+disk_size_gb: 4
+disk_type: ''
+create_option: empty
+disk_name: "{{ vm_name}}_{{ servicenow_request_number }}_{{ ansible_date_time.iso8601_basic_short[0:8] }}"
+subscription_id: "{{ lookup('ansible.builtin.env', 'SUBSCRIPTION_ID') }}"
+tenant_id: "{{ lookup('ansible.builtin.env', 'TENANT_ID') }}"
+client_id: "{{ lookup('ansible.builtin.env', 'CLIENT_ID_CONTRIB') }}"
+secret: "{{ lookup('ansible.builtin.env', 'CLIENT_SECRET_CONTRIB') }}"

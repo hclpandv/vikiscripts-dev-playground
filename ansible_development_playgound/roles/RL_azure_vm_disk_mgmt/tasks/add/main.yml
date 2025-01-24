@@ -1,0 +1,70 @@
+---
+# Add Azure disk to existing VM
+- name: Logging information to add disk to azure VM 
+  debug:
+    msg: | 
+      Client {{ client_id }} is upadating VM: {{ vm_name }}/{{ vm_resource_group }} in Azure subscription {{ subscription_id }}
+    
+- name: Create Azure managed disk
+  azure_rm_manageddisk:
+    name: "{{ disk_name }}" 
+    resource_group: "{{ vm_resource_group }}"
+    location: "{{ vm_location }}"
+    disk_size_gb: "{{ disk_size_gb }}"
+    storage_account_type: "{{ storage_account_type }}"
+    create_option: "{{ create_option }}"
+    managed_by: "{{ vm_name }}"
+    subscription_id: "{{ subscription_id }}"
+    tenant: "{{ tenant_id }}"
+    secret: "{{ secret }}"
+    client_id: "{{ client_id }}"
+
+- name: Format Mount windows disk via python script
+  command: python
+  args:
+    stdin: |
+      import azure.mgmt.compute
+      import azure.common.credentials
+
+      resource_group = "{{ vm_resource_group }}"
+      vm_name = "{{ vm_name }}"
+      subscription_id = "{{ subscription_id }}"
+
+      credential = azure.common.credentials.ServicePrincipalCredentials(
+        client_id = "{{ client_id }}",
+        secret = "{{ secret }}",
+        tenant = "{{ tenant }}"
+      )
+
+      compute_client = azure.mgmt.compute.ComputeManagementClient(credential, subscription_id)
+
+      # Execute a PowerShell command on the VM via run command
+      run_command_parameters = {
+        'command_id': 'RunPowerShellScript',
+        'script': [
+            'Get-Disk | Where partitionstyle -eq raw | Initialize-Disk -PartitionStyle GPT -Confirm:$false -PassThru | New-Partition -AssignDriveLetter -UseMaximumSize | Format-Volume -FileSystem NTFS -Confirm:$false'
+        ]
+      }
+
+      async_run_command = compute_client.virtual_machines.run_command(
+        resource_group,
+        vm_name,
+        run_command_parameters
+      )
+
+      run_command_result = async_run_command.result()
+      print(run_command_result.value[0].message)
+    
+  register: vm_run_cmd_output
+  no_log: true
+  ignore_errors: true
+  when:
+    - vm_os_family is defined 
+    - vm_os_family == "windows"
+
+- name: Display python script output
+  debug:
+    msg: |
+      python_script_result : {{ vm_run_cmd_output.stdout_lines }}
+  ignore_errors: true
+  when: vm_run_cmd_output is defined

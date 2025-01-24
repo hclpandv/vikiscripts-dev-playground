@@ -1,0 +1,31 @@
+---
+- name: Logging information to delete disk from azure VM 
+  debug:
+    msg: | 
+      Deleting disk {{ disk_name }} from Azure VM 
+      Client {{ client_id }} is upadating VM: {{ vm_name }}/{{ vm_resource_group }} in Azure subscription {{ subscription_id }}
+    
+- name: Detach Azure managed disk
+  azure_rm_manageddisk:
+    name: "{{ disk_name }}" 
+    resource_group: "{{ vm_resource_group }}"
+    location: "{{ vm_location }}"
+    disk_size_gb: "{{ disk_size_gb }}"
+    create_option: "{{ create_option }}"
+    managed_by: ''
+    subscription_id: "{{ subscription_id }}"
+    tenant: "{{ tenant_id }}"
+    secret: "{{ secret }}"
+    client_id: "{{ client_id }}"
+    #state: absent
+
+- name: Delete Azure managed disk
+  azure_rm_manageddisk:
+    name: "{{ disk_name }}" 
+    resource_group: "{{ vm_resource_group }}"
+    location: "{{ vm_location }}"
+    subscription_id: "{{ subscription_id }}"
+    tenant: "{{ tenant_id }}"
+    secret: "{{ secret }}"
+    client_id: "{{ client_id }}"
+    state: absent
