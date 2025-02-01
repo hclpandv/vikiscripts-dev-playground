@@ -16,14 +16,15 @@ def main():
     start_time = time.time()
     
     result_coffee = brewCoffee()
-    result_bread = toastBread()
+    result_toast = toastBread()
 
     end_time = time.time()
     elapsed_time = end_time - start_time
 
     print(f"Result of brewCofee: {result_coffee}")
-    print(f"Result of toastBread: {result_bread}")
+    print(f"Result of toastBread: {result_toast}")
     print(f"Total Execution time: {elapsed_time:.2f} seconds")
 
 if __name__ == "__main__":
     main()
+
